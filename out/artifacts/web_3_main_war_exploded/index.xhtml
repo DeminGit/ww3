@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+  <title>Web 3 | XXXX XXXX</title>
+  <h:outputStylesheet library="src" name="css/global.css"/>
+</h:head>
+<h:body>
+
+  <div class="video-background">
+    <video autoplay="autoplay" loop="loop" muted="muted">
+      <source src="#{resource['src/videos/main.mp4']}" type="video/mp4"/>
+      Ваш браузер не поддерживает тег video.
+    </video>
+  </div>
+
+  <div class="content">
+    <canvas id="clock" width="390" height="390"></canvas>
+    <header>
+      <h1>XXXX XXXX XXXX</h1>
+      <h2>PXXXX, Вариант XXXX</h2>
+    </header>
+    <h:form id="form" styleClass="buttons-container">
+      <h:commandButton value="Главная" styleClass="mybutton island-button main-button" action="go-main"/>
+    </h:form>
+  </div>
+
+  <h:outputScript library="src" name="js/clock.js"/>
+</h:body>
+</html>

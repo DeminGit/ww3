@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+  <title>Web 3 | XXXX XXXX</title>
+  <h:outputStylesheet library="css" name="global.css"/>
+</h:head>
+<h:body>
+
+  <div class="image-background">
+    <img src="#{resource['css/gory_ozero_vershiny_129263_1920x1080.jpg']}"
+         alt="Фото горы, озера и вершины"
+         class="fullscreen-image" />
+  </div>
+
+  <div class="content">
+    <canvas id="clock" width="390" height="390"></canvas>
+    <header>
+      <h1>XXXX XXXX XXXX</h1>
+      <h2>PXXXX, Вариант XXXX</h2>
+    </header>
+    <h:form id="form" styleClass="buttons-container">
+      <h:commandButton value="Главная" styleClass="gotomain" action="go-main"/>
+    </h:form>
+  </div>
+
+  <h:outputScript library="css" name="clock.js"/>
+</h:body>
+</html>

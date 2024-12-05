@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
+
+
+.fullscreen-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+
+.fullscreen-image1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+
+.content {
+  position: relative;
+  z-index: 0;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: 'Montserrat', sans-serif;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+
+header {
+  margin-top: 20px;
+}
+
+header h1, header h2 {
+  margin: 5px 0;
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Добавленная тень */
+}
+
+header h1:hover, header h2:hover {
+  color: #7ed0ba;
+}
+
+
+.island-button {
+  position: absolute;
+  background: rgba(255, 0, 0, 0.5);
+  border: none;
+  width: 380px;
+  height: 380px;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+.clock-button {
+  position: absolute;
+  top: 55%; /* Позиция кнопки "Часы" */
+  left: 0.1%;
+}
+
+.main-button {
+  position: absolute;
+  top: 60%;
+  left: 75%;
+}
+
+#rSelection label {
+  color: white;
+}
+
+
+#rSelection input[type="radio"] {
+  margin-right: 5px;
+}
+
+
+
+
+.button-in-clock-page {
+  padding: 12px 24px;
+  font-size: 1.2em;
+  color: #fff;
+  background: linear-gradient(135deg, #6dd5ed, #2193b0);
+  border: none;
+  border-radius: 25px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.button-in-clock-page:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+.mybutton {
+  background: bisque;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2em;
+  }
+
+  header h2 {
+    font-size: 1em;
+  }
+
+  .island-button {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+
+
+.myspinner {
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.slider-container {
+  margin-bottom: 20px;
+}
+
+.myselectbutton {
+
+}
+
+.gotomain {
+  display: block;
+  margin: 0 auto;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gotomain:hover {
+  background-color: black;
+  color: white;
+  border-color: white;
+}

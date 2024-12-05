@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Главная | XXXX XXXX</title>
+  <h:outputStylesheet library="css" name="global.css"/>
+  <h:outputStylesheet library="css" name="result.css"/>
+  <h:outputStylesheet library="css" name="main.css"/>
+</h:head>
+
+<h:body>
+
+  <!-- Фоновое видео -->
+  <div class="image-background">
+    <img src="#{resource['css/141641-voda-gora-ozero-nebo-televideniye-3840x2160.jpg']}"
+         alt="Фото горы, озера и вершины"
+         class="fullscreen-image1" />
+  </div>
+
+  <!-- Заголовок -->
+  <header>
+    <h1>XXXX XXXX</h1>
+    <h2>PXXXX, Вариант XXXXXX</h2>
+  </header>
+
+  <!-- Основное содержимое -->
+  <div class="main-site-body">
+    <!-- График -->
+    <div class="list-item">
+      <div class="card">
+        <div class="gradient-animation-box">
+          <span>
+            <canvas id="graph" width="390" height="390"></canvas>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Сообщение об ошибке -->
+    <div id="error-message" class="error">R не установлено</div>
+
+    <!-- Форма ввода данных -->
+    <div class="list-item">
+      <h:form id="form">
+        <h5 class="label">X</h5>
+        <h:panelGroup id="xLinks" layout="block" style="margin-bottom:10px;">
+
+          <p:commandLink value="-2" update="drawDotsPanel table" styleClass="x-link">
+            <f:setPropertyActionListener target="#{attemptBean.x}" value="-2" />
+          </p:commandLink>
+          <span> | </span>
+
+          <p:commandLink value="-1.5" update="drawDotsPanel table" styleClass="x-link">
+            <f:setPropertyActionListener target="#{attemptBean.x}" value="-1.5" />
+          </p:commandLink>
+          <span> | </span>
+
+          <p:commandLink value="-1" update="drawDotsPanel table" styleClass="x-link">
+            <f:setPropertyActionListener target="#{attemptBean.x}" value="-1" />
+          </p:commandLink>
+          <span> | </span>
+
+          <p:commandLink value="-0.5" update="drawDotsPanel table" styleClass="x-link">
+            <f:setPropertyActionListener target="#{attemptBean.x}" value="-0.5" />
+          </p:commandLink>
+          <span> | </span>
+
+          <p:commandLink value="0" update="drawDotsPanel table" styleClass="x-link">
+            <f:setPropertyActionListener target="#{attemptBean.x}" value="0" />
+          </p:commandLink>
+          <span> | </span>
+
+          <p:commandLink value="0.5" update="drawDotsPanel table" styleClass="x-link">
+            <f:setPropertyActionListener target="#{attemptBean.x}" value="0.5" />
+          </p:commandLink>
+          <span> | </span>
+
+          <p:commandLink value="1" update="drawDotsPanel table" styleClass="x-link">
+            <f:setPropertyActionListener target="#{attemptBean.x}" value="1" />
+          </p:commandLink>
+          <span> | </span>
+
+          <p:commandLink value="1.5" update="drawDotsPanel table" styleClass="x-link">
+            <f:setPropertyActionListener target="#{attemptBean.x}" value="1.5" />
+          </p:commandLink>
+          <span> | </span>
+
+        </h:panelGroup>
+        <p:message for="xLinks" display="text"/>
+
+
+        <!-- Ввод Y -->
+        <h5 class="label">Y</h5>
+        <h:panelGrid columns="1" styleClass="input-container">
+          <p:inputNumber name="y" id="y" maxlength="10" value="#{attemptBean.y}" decimalSeparator=".">
+            <f:validateDoubleRange minimum="-5" maximum="5"/>
+          </p:inputNumber>
+          <p:message for="y" display="text"/>
+        </h:panelGrid>
+
+        <!-- Выбор R с использованием SelectOneRadio-->
+        <h5 class="label">R</h5>
+        <h:panelGroup id="rSelection" style="margin-bottom:10px;">
+          <p:selectOneRadio id="rRadio" value="#{attemptBean.r}" layout="lineDirection" styleClass="r-radio">
+            <f:selectItem itemValue="1" itemLabel="1" />
+            <f:selectItem itemValue="1.5" itemLabel="1.5" />
+            <f:selectItem itemValue="2" itemLabel="2" />
+            <f:selectItem itemValue="2.5" itemLabel="2.5" />
+            <f:selectItem itemValue="3" itemLabel="3" />
+            <p:ajax event="change" update="drawDotsPanel updateErrorMessageR rValue"
+                    oncomplete="location.reload();"/>
+          </p:selectOneRadio>
+          <h:outputText id="rValue" value="#{attemptBean.r}" style="margin-left:10px;"/>
+        </h:panelGroup>
+
+        <p:message for="rRadio" display="text"/>
+
+
+        <!-- RemoteCommand (определён только один раз) -->
+        <p:remoteCommand name="addAttempt" action="#{attemptRepository.addAttemptFromJsParams}"
+                         update="table drawDotsPanel rValue" process="@this" oncomplete="onAddAttemptComplete();">
+          <f:param name="x"/>
+          <f:param name="y"/>
+          <f:param name="r"/>
+        </p:remoteCommand>
+
+        <!-- Кнопки отправки и очистки -->
+        <div class="buttons-container">
+          <p:commandButton ajax="true" id="submit" value="Отправить"
+                           action="#{attemptBean.addAttempt}"
+                           update="table drawDotsPanel rValue" process="@form" styleClass="mybutton"/>
+          <p:commandButton ajax="true" id="reset" value="Очистить"
+                           action="#{attemptRepository.clearAttempts()}"
+                           update="table drawDotsPanel rValue" process="@this" styleClass="mybutton"/>
+          <h:button value="Начальная страница" styleClass="mybutton" outcome="go-index"/>
+        </div>
+      </h:form>
+    </div>
+
+    <!-- Кнопка для показа/скрытия таблицы -->
+    <h:commandButton value="Показать/Скрыть результаты" styleClass="toggle-button" type="button">
+      <f:ajax render="resultsTable" onevent="toggleTable"/>
+    </h:commandButton>
+
+    <div id="resultsTable" class="results-table">
+      <p:dataTable id="table" value="#{attemptsList}" var="attempt" paginator="true"
+                   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                   rows="10" lazy="true" paginatorPosition="bottom" paginatorAlwaysVisible="true"
+                   styleClass="table">
+        <p:column headerText="ID">
+          <h:outputText value="#{attempt.id}"/>
+        </p:column>
+        <p:column headerText="X">
+          <h:outputText value="#{attempt.x}">
+            <f:convertNumber type="number"
+                             maxFractionDigits="3"
+                             groupingUsed="false"/>
+          </h:outputText>
+        </p:column>
+        <p:column headerText="Y">
+          <h:outputText value="#{attempt.y}">
+            <f:convertNumber type="number"
+                             maxFractionDigits="3"
+                             groupingUsed="false"/>
+          </h:outputText>
+        </p:column>
+        <p:column headerText="R">
+          <h:outputText value="#{attempt.r}"/>
+        </p:column>
+        <p:column headerText="Результат" styleClass="#{attempt.result ? 'result-yes' : 'result-no'}">
+          <h:outputText value="#{attempt.result ? 'Попал' : 'Не попал' }"/>
+        </p:column>
+        <p:column headerText="Отправлено">
+          <h:outputText value="#{attempt.createdAt}">
+            <f:convertDateTime pattern="dd.MM.yyyy HH:mm"/>
+          </h:outputText>
+        </p:column>
+        <p:column headerText="Время выполнения">
+          <h:outputText value="#{attempt.executionTime}"/>
+        </p:column>
+      </p:dataTable>
+    </div>
+  </div>
+
+  <h:outputScript library="css" name="graph.js"/>
+
+  <h:panelGroup id="drawDotsPanel">
+    <h:outputScript escape="false">
+      window.drawDots(
+      JSON.parse('#{attemptRepository.getPointsCoordinates()}'),
+      #{attemptBean.r}
+      );
+    </h:outputScript>
+  </h:panelGroup>
+
+  <h:panelGroup id="updateErrorMessageR">
+    <h:outputScript>
+      window.updateErrorMessageR(#{attemptBean.r});
+    </h:outputScript>
+  </h:panelGroup>
+
+  <p:remoteCommand name="updateGraph" update="drawDotsPanel" process="@this"/>
+
+
+  <h:outputScript>
+    function onAddAttemptComplete() {
+      if (typeof window.onAddAttemptComplete === "function") {
+        window.onAddAttemptComplete();
+      }
+    }
+  </h:outputScript>
+
+</h:body>
+</html>

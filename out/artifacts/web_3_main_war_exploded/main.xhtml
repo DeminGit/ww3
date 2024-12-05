@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Главная | XXXX XXXX</title>
+  <!-- Подключение стилей -->
+  <h:outputStylesheet library="src" name="css/global.css"/>
+  <h:outputStylesheet library="src" name="css/result.css"/>
+  <h:outputStylesheet library="src" name="css/main.css"/>
+</h:head>
+
+<h:body>
+
+  <!-- Фоновое видео -->
+  <div class="video-background">
+    <video autoplay="autoplay" loop="loop" muted="muted">
+      <source src="#{resource['src/videos/boring.mp4']}" type="video/mp4"/>
+      Ваш браузер не поддерживает тег video.
+    </video>
+  </div>
+
+  <!-- Заголовок -->
+  <header>
+    <h1>Артём Демин</h1>
+    <h2>P3212, Вариант 12013</h2>
+  </header>
+
+  <!-- Основное содержимое -->
+  <div class="main-site-body">
+    <!-- График -->
+    <div class="list-item">
+      <div class="card">
+        <div class="gradient-animation-box">
+          <span>
+            <canvas id="graph" width="390" height="390"></canvas>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Сообщение об ошибке -->
+    <div id="error-message" class="error">R не установлено</div>
+
+    <!-- Форма ввода данных -->
+    <div class="list-item">
+      <h:form id="form">
+        <!-- Выбор X с помощью p:spinner -->
+        <h5 class="label">X</h5>
+        <p:spinner id="xSpinner" value="#{attemptBean.x}" min="-3.0" max="3.0" step="0.1" maxlength="10"
+                   styleClass="myspinner">
+          <p:ajax event="change" update="drawDotsPanel table"/>
+        </p:spinner>
+        <p:message for="xSpinner" display="text"/>
+
+        <!-- Ввод Y -->
+        <h5 class="label">Y</h5>
+        <h:panelGrid columns="1" styleClass="input-container">
+          <p:inputNumber name="y" id="y" maxlength="10" value="#{attemptBean.y}" decimalSeparator=".">
+            <f:validateDoubleRange minimum="-3" maximum="3"/>
+          </p:inputNumber>
+          <p:message for="y" display="text"/>
+        </h:panelGrid>
+
+        <!-- Выбор R с использованием PrimeFaces p:slider -->
+        <h5 class="label">R</h5>
+        <div class="slider-container">
+          <!-- Скрытое поле для хранения значения R -->
+          <h:inputHidden id="rInput" value="#{attemptBean.r}" />
+
+          <!-- Слайдер, связанный с rInput -->
+          <p:slider for="rInput"
+                    minValue="1.0"
+                    maxValue="3.0"
+                    step="0.5"
+                    styleClass="myslider"
+                    orientation="horizontal">
+            <p:ajax event="slideEnd" update="drawDotsPanel updateErrorMessageR rValue"/>
+          </p:slider>
+
+          <!-- Отображение текущего значения R -->
+          <h:outputText id="rValue" value="#{attemptBean.r}" style="margin-left:10px;"/>
+        </div>
+
+        <!-- RemoteCommand (определён только один раз) -->
+        <p:remoteCommand name="addAttempt" action="#{attemptRepository.addAttemptFromJsParams}"
+                         update="table drawDotsPanel rValue" process="@this" oncomplete="onAddAttemptComplete();">
+          <f:param name="x"/>
+          <f:param name="y"/>
+          <f:param name="r"/>
+        </p:remoteCommand>
+
+        <!-- Кнопки отправки и очистки -->
+        <div class="buttons-container">
+          <p:commandButton ajax="true" id="submit" value="Отправить"
+                           action="#{attemptRepository.addAttempt(attemptBean)}"
+                           update="table drawDotsPanel rValue" process="@form" styleClass="mybutton"/>
+          <p:commandButton ajax="true" id="reset" value="Очистить"
+                           action="#{attemptRepository.clearAttempts()}"
+                           update="table drawDotsPanel rValue" process="@this" styleClass="mybutton"/>
+          <h:button value="Начальная страница" styleClass="mybutton" outcome="go-index"/>
+        </div>
+      </h:form>
+    </div>
+
+    <!-- Кнопка для показа/скрытия таблицы -->
+    <h:commandButton value="Показать/Скрыть результаты" styleClass="toggle-button" type="button">
+      <f:ajax render="resultsTable" onevent="toggleTable"/>
+    </h:commandButton>
+
+    <!-- Таблица результатов -->
+    <div id="resultsTable" class="results-table">
+      <p:dataTable id="table" value="#{attemptsList}" var="attempt" paginator="true"
+                   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                   rows="10" lazy="true" paginatorPosition="bottom" paginatorAlwaysVisible="true"
+                   styleClass="table">
+        <p:column headerText="ID">
+          <h:outputText value="#{attempt.id}"/>
+        </p:column>
+        <p:column headerText="X">
+          <h:outputText value="#{attempt.x}">
+            <f:convertNumber type="number"
+                             maxFractionDigits="3"
+                             groupingUsed="false"/>
+          </h:outputText>
+        </p:column>
+        <p:column headerText="Y">
+          <h:outputText value="#{attempt.y}">
+            <f:convertNumber type="number"
+                             maxFractionDigits="3"
+                             groupingUsed="false"/>
+          </h:outputText>
+        </p:column>
+        <p:column headerText="R">
+          <h:outputText value="#{attempt.r}"/>
+        </p:column>
+        <p:column headerText="Результат" styleClass="#{attempt.result ? 'result-yes' : 'result-no'}">
+          <h:outputText value="#{attempt.result ? 'Попал' : 'Не попал' }"/>
+        </p:column>
+        <p:column headerText="Отправлено">
+          <h:outputText value="#{attempt.createdAt}">
+            <f:convertDateTime pattern="dd.MM.yyyy HH:mm"/>
+          </h:outputText>
+        </p:column>
+        <p:column headerText="Время выполнения">
+          <h:outputText value="#{attempt.executionTime}"/>
+        </p:column>
+      </p:dataTable>
+    </div>
+  </div>
+
+  <!-- Подключение JavaScript -->
+  <h:outputScript library="src" name="js/graph.js"/>
+
+  <h:panelGroup id="drawDotsPanel">
+    <h:outputScript escape="false">
+      window.drawDots(
+      JSON.parse('#{attemptRepository.getPointsCoordinates()}'),
+      #{attemptBean.r}
+      );
+    </h:outputScript>
+  </h:panelGroup>
+
+  <!-- Обновление сообщения об ошибке -->
+  <h:panelGroup id="updateErrorMessageR">
+    <h:outputScript>
+      window.updateErrorMessageR(#{attemptBean.r});
+    </h:outputScript>
+  </h:panelGroup>
+
+  <!-- RemoteCommand для AJAX-взаимодействия -->
+  <p:remoteCommand name="updateGraph" update="drawDotsPanel" process="@this"/>
+
+  <!-- Добавьте функцию для сброса флага -->
+  <h:outputScript>
+    function onAddAttemptComplete() {
+      if (typeof window.onAddAttemptComplete === "function") {
+        window.onAddAttemptComplete();
+      }
+    }
+  </h:outputScript>
+
+</h:body>
+</html>

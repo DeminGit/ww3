@@ -1,0 +1,22 @@
+CREATE TABLE ATTEMPTS (
+                        ID NUMBER PRIMARY KEY,
+                        X NUMBER(10, 2),
+                        Y NUMBER(10, 2),
+                        R NUMBER(10, 2),
+                        RESULT CHAR(1),
+                        CREATED_AT TIMESTAMP,
+                        EXECUTION_TIME NUMBER,
+                        SESSION_ID VARCHAR2(255)
+);
+
+CREATE SEQUENCE ATTEMPT_SEQ START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
+
+CREATE OR REPLACE TRIGGER ATTEMPTS_BI
+BEFORE INSERT ON ATTEMPTS
+FOR EACH ROW
+BEGIN
+    IF :NEW.ID IS NULL THEN
+SELECT ATTEMPT_SEQ.NEXTVAL INTO :NEW.ID FROM DUAL;
+END IF;
+END;
+/

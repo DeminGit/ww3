@@ -1,0 +1,162 @@
+@import "colors.css";
+
+@import "graph-animation.css";
+
+@import "input.css";
+
+
+* {
+    margin: 0;
+    padding: 0
+}
+
+.main-site-body {
+    margin-left: 50px
+}
+
+.list-item {
+    padding: 20px 0
+}
+
+canvas {
+    display: block;
+}
+
+.mytext {
+  font-size: 20px;
+  background: var(--primary-background);
+  outline: none;
+  color: var(--primary-text)
+}
+
+.error {
+  text-shadow: #f54c45 1px 0 10px;
+  font-weight: bold;
+  font-size: 24px;
+  background: var(--primary-background);
+  color: var(--error)
+}
+
+.table {
+  background: var(--primary-background);
+  color: var(--primary-text)
+}
+
+.result-yes {
+  color: var(--hit-dot-color)
+}
+
+.result-no {
+  color: var(--miss-dot-color)
+}
+
+
+.myspinner {
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.slider-container {
+  margin-bottom: 20px;
+}
+
+.myselectbutton {
+  /* Ваши стили для кнопок выбора R */
+}
+
+
+/* Контейнер для отметок под слайдером */
+.slider-marks {
+  position: relative;
+  width: 100%;
+  height: 30px; /* Высота контейнера для отметок */
+  margin-top: -10px; /* Расположить ближе к слайдеру */
+}
+
+/* Индивидуальная отметка */
+.mark {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 12px;
+  color: #333;
+}
+
+/* Точка отметки */
+.mark::before {
+  content: '';
+  position: absolute;
+  top: 10px; /* Расположение точки ниже текста */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: #000;
+  border-radius: 50%;
+}
+
+
+/* Стили для контейнера слайдера */
+.slider-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px; /* Отступ снизу для разделения с другими элементами */
+}
+
+/* Стили для слайдера */
+.myslider {
+  width: 200px; /* Ширина слайдера, при необходимости можно изменить */
+  margin-right: 10px; /* Отступ справа для разделения с текстом */
+}
+
+
+/*     new      */
+
+/* Стилизация кнопок выбора X */
+.x-link .ui-button {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
+  -1px 1px 0 #000, 1px 1px 0 #000;
+  background-color: #007ad9;
+  border: none;
+  margin: 2px;
+}
+
+.x-buttons .ui-button.ui-state-active {
+  background-color: #005f9e;
+}
+
+/* Стилизация текста радиокнопок R */
+.r-radio .ui-radiobutton-label {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
+  -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+/* Стилизация самих радиокнопок R */
+.r-radio .ui-radiobutton-box {
+  border: 1px solid #000;
+  background-color: #007ad9;
+}
+
+.r-radio .ui-radiobutton-box.ui-state-active {
+  background-color: #005f9e;
+}
+
+/* Расстояние между радиокнопками */
+.r-radio .ui-radiobutton {
+  margin-right: 10px;
+}
+
+/* Стили для заголовков */
+.label {
+  color: white;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-shadow: 1px 1px 2px #000;
+}
+
+
+
+

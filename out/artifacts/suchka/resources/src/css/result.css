@@ -1,0 +1,181 @@
+/* Импорт шрифтов */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&family=Pacifico&display=swap');
+
+/* CSS переменные */
+:root {
+  --secondary-background: #ffffff;
+  --secondary-text: #000000;
+  --primary-text: #000000;
+  --areas-color: rgba(30, 144, 255, 0.5);
+  --hit-dot-color: green;
+  --miss-dot-color: red;
+}
+
+/* Основной фон */
+body {
+  background: url('../images/flying_island.jpg') no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Заголовки */
+header h1, header h2 {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+  margin: 10px 0;
+}
+
+/* Основное содержимое */
+.main-site-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* График */
+#graph {
+  background-color: var(--secondary-background);
+  border: 1px solid var(--primary-text);
+  margin: 20px auto;
+  display: block;
+}
+
+/* Сообщение об ошибке */
+#error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Метки */
+.label {
+  font-size: 1.2em;
+  color: #fff;
+  margin-bottom: 10px;
+  text-align: center; /* Центрирование меток */
+}
+
+/* Поля ввода */
+.mytext {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  margin-bottom: 15px;
+}
+
+/* Контейнер для полей ввода */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Контейнер кнопок */
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Кнопки */
+.mybutton, .toggle-button {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #a8e063, #56ab2f);
+  color: #fff !important;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1em;
+  text-align: center;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.mybutton:hover, .toggle-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Стили для p:selectOneButton */
+.myselectbutton .ui-button {
+  background: linear-gradient(135deg, #a8e063, #56ab2f) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 25px !important;
+  font-size: 1em;
+  padding: 12px 24px;
+  margin: 5px;
+  text-align: center;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.myselectbutton .ui-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+}
+
+.myselectbutton .ui-state-active {
+  background: linear-gradient(135deg, #56ab2f, #a8e063) !important;
+  color: #fff !important;
+}
+
+/* Обеспечение белого цвета текста на кнопках */
+.mybutton, .mybutton *, .myselectbutton .ui-button, .myselectbutton .ui-button * {
+  color: #fff !important;
+}
+
+/* Стили таблицы */
+.table {
+  width: 80%;
+  margin: 20px auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  text-align: center;
+  color: #333;
+}
+
+.table th {
+  background-color: #6dd5ed;
+  background-image: linear-gradient(135deg, #6dd5ed, #2193b0);
+  color: #fff;
+}
+
+.table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.table tr:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Контейнер таблицы */
+.results-table {
+  display: none; /* Таблица скрыта по умолчанию */
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .mybutton, .toggle-button {
+    font-size: 0.9em;
+    padding: 10px 20px;
+  }
+
+  .table {
+    width: 100%;
+  }
+}
