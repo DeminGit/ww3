@@ -11,6 +11,7 @@ function getCssColor(name) {
 }
 
 
+
 function getCurrentRValue() {
   const rValueElement = document.getElementById('rValue');
   if (rValueElement) {
@@ -222,18 +223,6 @@ function drawCanvasGraph(coordinatesList, r) {
 
       const x = convertCanvasToLogicalX(clickX);
       const y = convertCanvasToLogicalY(clickY);
-      //const currentR = getCurrentRValue();
-
-      // if (isNaN(currentR)) {
-      //   alert("Пожалуйста, выберите значение R.");
-      //   return;
-      // }
-
-
-
-
-
-      // Устанавливаем флаг перед отправкой запроса
       window.isRequestInProgress = true;
 
       // Отправка данных на сервер через remoteCommand addAttempt
@@ -244,6 +233,7 @@ function drawCanvasGraph(coordinatesList, r) {
       ]);
     });
     listenerAdded = true;
+    // handleClick();
   }
 
   // Функция сброса флага после завершения запроса
@@ -282,3 +272,32 @@ function toggleTable(data) {
     table.style.display = table.style.display === 'none' ? 'block' : 'none';
   }
 }
+
+// function handleClick() {
+//   canvas.addEventListener("mousedown", function (event) {
+//     if (window.isRequestInProgress) {
+//       console.warn("Запрос уже обрабатывается. Пожалуйста, подождите.");
+//       return;
+//     }
+//
+//     const rect = canvas.getBoundingClientRect();
+//     const clickX = event.clientX - rect.left;
+//     const clickY = event.clientY - rect.top;
+//
+//     const x = convertCanvasToLogicalX(clickX);
+//     const y = convertCanvasToLogicalY(clickY);
+//     window.isRequestInProgress = true;
+//
+//     // Отправка данных на сервер через remoteCommand addAttempt
+//     addAttempt([
+//       { name: 'x', value: x.toString() },
+//       { name: 'y', value: y.toString() },
+//       { name: 'r', value: r.toString() }
+//     ]);
+//   });
+//   listenerAdded = true;
+// }
+
+// window.onload = function() {
+//   handleClick();
+// }

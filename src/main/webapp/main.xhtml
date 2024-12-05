@@ -11,6 +11,31 @@
   <h:outputStylesheet library="css" name="global.css"/>
   <h:outputStylesheet library="css" name="result.css"/>
   <h:outputStylesheet library="css" name="main.css"/>
+
+
+  <style>
+    .x-link {
+      background-color: white;
+      color: black;
+      border: 1px solid black;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .x-link:hover {
+      background-color: black;
+      color: white;
+    }
+
+    .x-link.active {
+      background-color: black;
+      color: white;
+    }
+
+
+  </style>
+
 </h:head>
 
 <h:body>
@@ -50,48 +75,56 @@
         <h5 class="label">X</h5>
         <h:panelGroup id="xLinks" layout="block" style="margin-bottom:10px;">
 
-          <p:commandLink value="-2" update="drawDotsPanel table" styleClass="x-link">
+          <p:commandLink value="-2" update="drawDotsPanel table" styleClass="x-link"  onclick="setActive(this);">
             <f:setPropertyActionListener target="#{attemptBean.x}" value="-2" />
           </p:commandLink>
           <span> | </span>
 
-          <p:commandLink value="-1.5" update="drawDotsPanel table" styleClass="x-link">
+          <p:commandLink value="-1.5" update="drawDotsPanel table" styleClass="x-link" onclick="setActive(this);">
             <f:setPropertyActionListener target="#{attemptBean.x}" value="-1.5" />
           </p:commandLink>
           <span> | </span>
 
-          <p:commandLink value="-1" update="drawDotsPanel table" styleClass="x-link">
+          <p:commandLink value="-1" update="drawDotsPanel table" styleClass="x-link" onclick="setActive(this);">
             <f:setPropertyActionListener target="#{attemptBean.x}" value="-1" />
           </p:commandLink>
           <span> | </span>
 
-          <p:commandLink value="-0.5" update="drawDotsPanel table" styleClass="x-link">
+          <p:commandLink value="-0.5" update="drawDotsPanel table" styleClass="x-link" onclick="setActive(this);">
             <f:setPropertyActionListener target="#{attemptBean.x}" value="-0.5" />
           </p:commandLink>
           <span> | </span>
 
-          <p:commandLink value="0" update="drawDotsPanel table" styleClass="x-link">
+          <p:commandLink value="0" update="drawDotsPanel table" styleClass="x-link" onclick="setActive(this);">
             <f:setPropertyActionListener target="#{attemptBean.x}" value="0" />
           </p:commandLink>
           <span> | </span>
 
-          <p:commandLink value="0.5" update="drawDotsPanel table" styleClass="x-link">
+          <p:commandLink value="0.5" update="drawDotsPanel table" styleClass="x-link" onclick="setActive(this);">
             <f:setPropertyActionListener target="#{attemptBean.x}" value="0.5" />
           </p:commandLink>
           <span> | </span>
 
-          <p:commandLink value="1" update="drawDotsPanel table" styleClass="x-link">
+          <p:commandLink value="1" update="drawDotsPanel table" styleClass="x-link" onclick="setActive(this);">
             <f:setPropertyActionListener target="#{attemptBean.x}" value="1" />
           </p:commandLink>
           <span> | </span>
 
-          <p:commandLink value="1.5" update="drawDotsPanel table" styleClass="x-link">
+          <p:commandLink value="1.5" update="drawDotsPanel table" styleClass="x-link" onclick="setActive(this);">
             <f:setPropertyActionListener target="#{attemptBean.x}" value="1.5" />
           </p:commandLink>
           <span> | </span>
 
         </h:panelGroup>
         <p:message for="xLinks" display="text"/>
+
+
+        <script>
+          function setActive(element) {
+            document.querySelectorAll('.x-link').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+          }
+        </script>
 
 
         <!-- Ввод Y -->
@@ -106,13 +139,14 @@
         <!-- Выбор R с использованием SelectOneRadio-->
         <h5 class="label">R</h5>
         <h:panelGroup id="rSelection" style="margin-bottom:10px;">
+
           <p:selectOneRadio id="rRadio" value="#{attemptBean.r}" layout="lineDirection" styleClass="r-radio">
-            <f:selectItem itemValue="1" itemLabel="1" />
+            <f:selectItem itemValue="1.0" itemLabel="1"  />
             <f:selectItem itemValue="1.5" itemLabel="1.5" />
-            <f:selectItem itemValue="2" itemLabel="2" />
+            <f:selectItem itemValue="2.0" itemLabel="2" />
             <f:selectItem itemValue="2.5" itemLabel="2.5" />
-            <f:selectItem itemValue="3" itemLabel="3" />
-            <p:ajax event="change" update="drawDotsPanel updateErrorMessageR rValue"
+            <f:selectItem itemValue="3.0" itemLabel="3" />
+            <p:ajax event="change" update="drawDotsPanel updateErrorMessageR"
                     oncomplete="location.reload();"/>
           </p:selectOneRadio>
           <h:outputText id="rValue" value="#{attemptBean.r}" style="margin-left:10px;"/>
